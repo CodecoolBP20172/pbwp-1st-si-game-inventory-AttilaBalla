@@ -51,9 +51,9 @@ class GameInventory:
         if order == 'count,asc':  # we use OrderedDict to sort the dictionary
             sortedinv = OrderedDict(sorted(self.inventory.items(), key=lambda t: t[1]))
             for key, value in sortedinv.items():
-                sum_of_items += value
-                spacelength_key = longestkeylen - (len(str(key)))
-                spacelenght_value = longestvaluelen - (len(str(value)))
+                sum_of_items += value  # just to display the total ammount of stuff at the end
+                spacelength_key = longestkeylen - (len(str(key)))  # calculate the correct ammount of spaces
+                spacelenght_value = longestvaluelen - (len(str(value)))  # to make it look nice
                 print(spacelenght_value*' ', value, ' ', spacelength_key*' ', key)
 
         elif order == 'count,desc':
@@ -84,12 +84,12 @@ class GameInventory:
                     self.inventory[item] = 1  # if no, add it
 
     def export_inventory(self, filename="export_inventory.csv"):
-        listtowrite = []
-        writer = csv.writer(open(filename, 'w'), quoting=csv.QUOTE_NONE, escapechar="|")
-        for key, value in self.inventory.items():
-            for i in range(value):
+        listtowrite = []  # we make a temporary list to get the format for writing
+        writer = csv.writer(open(filename, 'w'), quoting=csv.QUOTE_NONE, escapechar="|")  # args handle special cases
+        for key, value in self.inventory.items():  # for every key/value pair
+            for i in range(value):  # we put the key (item) to the list [value] times
                 listtowrite.append(key)
-        writer.writerow(listtowrite)
+        writer.writerow(listtowrite)  # and finally we write it to the file
 
 
 # >>>main<<<
@@ -105,9 +105,9 @@ print()
 invhandler.add_to_inventory(dragon_loot)
 print('added items...')
 invhandler.display_inventory()
-invhandler.import_inventory()
+invhandler.import_inventory()  # note that this imports a previously exported inventory
 print('imported items...')
 invhandler.display_inventory()
 print()
-invhandler.print_table("count,desc")
+invhandler.print_table("count,desc")  # parameter can be changed to test all branches of func
 invhandler.export_inventory()
