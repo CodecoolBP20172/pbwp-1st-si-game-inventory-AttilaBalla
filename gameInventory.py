@@ -11,11 +11,9 @@ class GameInventory:
             self.inventory = inventory  # ...else we use the one we've got
 
     def display_inventory(self):
-        sum_of_items = 0
         for key, value in self.inventory.items():  # inventory.items() is an iterable... cool!
-            sum_of_items += value
             print(value, ' ', key)
-        print ('Total number of items: ', sum_of_items)
+        print ('Total number of items: ', sum(self.inventory.values()))
 
     def add_to_inventory(self, added_items):
         item_cache = []  # to avoid iterating through multiple items of the same kind, we cache the ones we go through
@@ -77,8 +75,7 @@ class GameInventory:
         print ('Total number of items: ', sum_of_items)
 
     def import_inventory(self, filename="test_inventory.csv"):
-        reader = csv.reader(open(filename, 'r', newline=''))
-
+        reader = csv.reader(open(filename, 'r', newline=''), quoting=csv.QUOTE_NONE, escapechar="|")
         for row in reader:
             for item in row:
                 if item in self.inventory:  # we check whether or not our item exists in the dictionary
@@ -88,14 +85,21 @@ class GameInventory:
 
     def export_inventory(self, filename="export_inventory.csv"):
         listtowrite = []
-        writer = csv.writer(open(filename, 'w'))
+        writer = csv.writer(open(filename, 'w'), quoting=csv.QUOTE_NONE, escapechar="|")
+        for key, value in self.inventory.items():
+            for i in range(value):
+                listtowrite.append(key)
+        writer.writerow(listtowrite)
 
 
 # >>>main<<<
-inv = {'rope': 1, 'torch': 6, 'gold coin': 42, 'dagger': 1, 'arrow': 12}
-dragon_loot = ['gold coin', 'dagger', 'gold coin', 'gold coin', 'ruby']
+inv = {'rope': 1, 'torch': 6, 'gold coin': 42, 'dagger': 1, 'arrow': 12}  # given by assignment
+dragon_loot = ['gold coin', 'dagger', 'gold coin', 'gold coin', 'ruby']  # given by assignment
 
-invhandler = GameInventory(inv)
+invhandler = GameInventory(inv)  # class instance declaration
+
+# Demonstration of functions
+
 invhandler.display_inventory()
 print()
 invhandler.add_to_inventory(dragon_loot)
