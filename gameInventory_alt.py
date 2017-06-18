@@ -97,9 +97,8 @@ print()
 inv = add_to_inventory(inv, dragon_loot)
 print('added items...')
 display_inventory(inv)
-# invhandler.import_inventory()  # note that this imports a previously exported inventory
-# print('imported items...')
-# invhandler.display_inventory()
-# print()
-# invhandler.print_table("count,desc")  # parameter can be changed to test all branches of func
-# invhandler.export_inventory()
+import_inventory(inv)  # note that this imports a previously exported inventory
+print('imported items...')
+print()
+print_table(inv, "count,desc")  # parameter can be changed to test all branches of func
+export_inventory(inv)
