@@ -20,6 +20,7 @@ def add_to_inventory(inventory, added_items):
                     inventory[item] += ammount  # if yes, increment it
                 else:
                     inventory[item] = ammount  # if no, add it
+        return inventory
 
 
 def getcharlength(listofelements):  # Takes a list, returns the length of its longest element
@@ -73,11 +74,7 @@ def print_table(inventory, order=None):
 def import_inventory(inventory, filename="test_inventory_export.csv"):
         reader = csv.reader(open(filename, 'r', newline=''), quoting=csv.QUOTE_NONE, escapechar="|")
         for row in reader:
-            for item in row:
-                if item in inventory:  # we check whether or not our item exists in the dictionary
-                    inventory[item] += 1  # if yes, increment it
-                else:
-                    inventory[item] = 1  # if no, add it
+            add_to_inventory(inventory, row)
 
 
 def export_inventory(inventory, filename="export_inventory.csv"):
@@ -97,7 +94,7 @@ dragon_loot = ['gold coin', 'dagger', 'gold coin', 'gold coin', 'ruby']  # given
 
 display_inventory(inv)
 print()
-add_to_inventory(inv, dragon_loot)
+inv = add_to_inventory(inv, dragon_loot)
 print('added items...')
 display_inventory(inv)
 # invhandler.import_inventory()  # note that this imports a previously exported inventory
